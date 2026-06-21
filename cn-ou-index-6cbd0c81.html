@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>大小球 · 持续关注与系统参考</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; line-height: 1.7; color: #1f2937; background: #f9fafb; }
+
+    /* 深色头图 */
+    .hero {
+      background: linear-gradient(145deg, #0b1120 0%, #1e293b 100%);
+      color: #e2e8f0;
+      padding: 4rem 2rem 3rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -30px; left: -20px; right: -20px;
+      height: 60px;
+      background: #f9fafb;
+      border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+    }
+    .hero h1 {
+      font-size: 2.2rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+    }
+    .hero h1 span {
+      color: #facc15;
+      font-weight: 600;
+    }
+    .hero p {
+      max-width: 580px;
+      margin: 1rem auto 0.5rem;
+      font-size: 1.05rem;
+      color: #cbd5e1;
+    }
+    .hero .sub {
+      font-size: 0.9rem;
+      color: #94a3b8;
+      margin-top: 0.25rem;
+    }
+
+    /* 导航 */
+    .topnav {
+      display: flex;
+      justify-content: center;
+      gap: 2.2rem;
+      background: #ffffffdd;
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid #e2e8f0;
+      padding: 0.9rem 1.5rem;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .topnav a {
+      text-decoration: none;
+      color: #334155;
+      font-weight: 500;
+      font-size: 0.95rem;
+      padding: 0.2rem 0;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .topnav a:hover {
+      color: #b45309;
+      border-bottom-color: #b45309;
+    }
+    .topnav a.highlight {
+      color: #b45309;
+      font-weight: 600;
+      border-bottom-color: #b45309;
+    }
+
+    /* 正文区 */
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 3rem;
+    }
+
+    /* 核心介绍 */
+    .intro-card {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 2rem 2.2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03), 0 1px 4px rgba(0,0,0,0.04);
+      margin-bottom: 2.5rem;
+      border-left: 4px solid #dc2626;
+    }
+    .intro-card h2 {
+      font-size: 1.5rem;
+      font-weight: 500;
+      margin-bottom: 0.8rem;
+      color: #111827;
+    }
+    .intro-card h2 small {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: #6b7280;
+      margin-left: 0.6rem;
+    }
+    .intro-card p {
+      margin-bottom: 0.9rem;
+    }
+    .intro-card a {
+      color: #b45309;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      font-weight: 500;
+    }
+    .intro-card a:hover {
+      color: #7c2d12;
+    }
+
+    /* 场景模块 — 三卡片 */
+    .scene-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.8rem;
+      margin: 2.5rem 0;
+    }
+    .scene-card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 1.8rem 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+      border: 1px solid #eef2f6;
+      transition: transform 0.15s, box-shadow 0.2s;
+    }
+    .scene-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+    }
+    .scene-card h3 {
+      font-size: 1.2rem;
+      font-weight: 500;
+      margin-bottom: 0.6rem;
+      color: #1f2937;
+      border-left: 4px solid #dc2626;
+      padding-left: 0.7rem;
+    }
+    .scene-card p {
+      font-size: 0.95rem;
+      color: #475569;
+      margin-bottom: 0.4rem;
+    }
+    .scene-card .tag {
+      display: inline-block;
+      background: #fef3c7;
+      color: #92400e;
+      font-size: 0.75rem;
+      padding: 0.15rem 0.6rem;
+      border-radius: 20px;
+      margin-top: 0.3rem;
+    }
+
+    /* 常见说明区 */
+    .faq-wrap {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 2rem 2.2rem;
+      margin-top: 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+      border: 1px solid #e5e9ef;
+    }
+    .faq-wrap h2 {
+      font-size: 1.3rem;
+      font-weight: 500;
+      margin-bottom: 1.2rem;
+      color: #111827;
+    }
+    .faq-item {
+      border-bottom: 1px solid #edf2f7;
+      padding: 0.8rem 0;
+    }
+    .faq-item:last-child {
+      border-bottom: 0;
+    }
+    .faq-item strong {
+      display: block;
+      font-weight: 500;
+      color: #1e293b;
+      margin-bottom: 0.2rem;
+    }
+    .faq-item p {
+      color: #4b5563;
+      font-size: 0.95rem;
+    }
+    .faq-item a {
+      color: #b45309;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .faq-item a:hover {
+      color: #7c2d12;
+    }
+
+    .footnote {
+      text-align: center;
+      margin-top: 3rem;
+      padding: 1.5rem 0 0.5rem;
+      font-size: 0.85rem;
+      color: #9ca3af;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    @media (max-width: 700px) {
+      .hero { padding: 3rem 1.2rem 2.5rem; }
+      .hero h1 { font-size: 1.7rem; }
+      .topnav { gap: 1rem; }
+      .scene-grid { grid-template-columns: 1fr; gap: 1.2rem; }
+      .intro-card, .faq-wrap { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <!-- 深色头图 -->
+  <header class="hero">
+    <h1>再次看到 <span>大小球</span> · 轻量参考</h1>
+    <p>从收藏、回访到持续关注，以知识型视角梳理概念与常见场景。</p>
+    <div class="sub">信息页面 · 长期维护</div>
+  </header>
+
+  <!-- 顶部导航 -->
+  <nav class="topnav">
+    <a href="#intro">概念回顾</a>
+    <a href="#scenes">三个场景</a>
+    <a href="#faq">常见说明</a>
+    <a href="#" class="highlight">书签保存</a>
+  </nav>
+
+  <div class="container">
+    <!-- 核心介绍 -->
+    <section class="intro-card" id="intro">
+      <h2>再次访问与收藏 <small>—— 基于长期观察</small></h2>
+      <p>
+        如果你曾浏览过关于 <a href="https://cn-ou.com">大小球</a> 的内容，再次回到这个页面时，或许不只是为了回顾基础概念。作为一类在体育赛事与数据讨论中频繁出现的术语，“大小球”常常被用作分析进球趋势的简化框架。它不指向某个固定结论，而是一种常见的切入角度。
+      </p>
+      <p>
+        把页面加入书签，或是偶尔回访，并不意味着你需要不断获取新消息——更多时候，它是你在讨论或阅读时的一个稳定参考。保持对基本逻辑的熟悉，比追赶碎片信息更有价值。
+      </p>
+    </section>
+
+    <!-- 三个场景模块 -->
+    <h2 style="font-weight:500; font-size:1.2rem; margin-bottom:0.5rem; color:#1f2937;">三个典型使用场景</h2>
+    <div class="scene-grid" id="scenes">
+      <div class="scene-card">
+        <h3>赛前准备</h3>
+        <p>浏览对阵信息时，将“大小球”作为一项参考维度，了解两队近期得失球分布。它帮助你在比赛开始前形成整体印象，而非依赖单一数据。</p>
+        <span class="tag">参考维度</span>
+      </div>
+      <div class="scene-card">
+        <h3>中场讨论</h3>
+        <p>直播或社交平台上，经常出现关于当前节奏是否“偏大”或“偏小”的即席判断。拥有清晰的定义边界，能让你的表达更有条理。</p>
+        <span class="tag">即时讨论</span>
+      </div>
+      <div class="scene-card">
+        <h3>长期记录</h3>
+        <p>对多场比赛进行归纳时，将“大小球”作为分类标签，有助于整理观察笔记。无论你关注联赛还是杯赛，这个维度都相对稳定。</p>
+        <span class="tag">分析整理</span>
+      </div>
+    </div>
+
+    <!-- 常见说明 (FAQ摘要) -->
+    <section class="faq-wrap" id="faq">
+      <h2>常见说明 · 摘要</h2>
+      <div class="faq-item">
+        <strong>“大小球”是一个固定指标吗？</strong>
+        <p>不是。它通常根据联赛、赛季甚至具体比赛而变化。所谓“大小”是基于某条预设线（如2.5）对总进球数的定性描述。不同平台或讨论语境中，那条线可能不同。</p>
+      </div>
+      <div class="faq-item">
+        <strong>为什么需要区分“再次访问”和“首次学习”？</strong>
+        <p>首次学习重点在定义与边界；再次访问时，你更关心概念如何与当前话题衔接。本页面更偏向后者——当你已经知道 <a href="https://cn-ou.com">大小球</a> 的基本含义，回访时能更快找到与场景的关联。</p>
+      </div>
+      <div class="faq-item">
+        <strong>页面会频繁更新吗？</strong>
+        <p>不会。本页面定位为轻量导航式参考，内容结构保持稳定。偶尔会根据反馈调整表述或补充常见场景，但不会追逐短期热点。建议将链接收藏，而非定期刷新。</p>
+      </div>
+      <div class="faq-item">
+        <strong>我可以引用或分享这里的描述吗？</strong>
+        <p>可以。所有内容均为基于公开常识的归纳，不涉及独家数据或方法论。分享时注明出处即可。</p>
+      </div>
+    </section>
+
+    <div class="footnote">
+      页面内容仅供学习与参考 · 保持开放与严谨
+    </div>
+  </div>
+</body>
+</html>
